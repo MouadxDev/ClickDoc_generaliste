@@ -166,7 +166,7 @@ const props = defineProps<{
               </div>
             </template>
           </el-table-column>
-          <el-table-column v-if="actions.length>0" prop="avatar" width="60px" >
+          <el-table-column v-if="actions.length>0" prop="avatar" width="70px" >
             <template #default="scope">
               <div class="text-center">
                 <el-button link v-for="a in actions" :key="a.icon" @click="a.action(scope.row)">
