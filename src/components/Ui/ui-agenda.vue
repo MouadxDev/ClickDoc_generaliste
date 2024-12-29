@@ -5,6 +5,7 @@
     import { useRdvStore } from '../../../core/Data/stores/rendez-vous';
     import moment from 'moment';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import router from '../../router/index.ts';
 
 
     const client = new RendezVous();
@@ -46,37 +47,54 @@ import { ElMessage, ElMessageBox } from 'element-plus';
         }
         }
 
-    const changeToEvents = async()=>{
-		loaded.value=false
-		mainList.value = await client.getByMonth(moment(date.value).format("MM"))
-        
+        const changeToEvents = async () => {
+    loaded.value = false;
+    mainList.value = await client.getByMonth(moment(date.value).format("MM"));
 
-        let generated=[]
-		for (const [key, value] of Object.entries(mainList.value)) {
-            
-          
-			generated.push({
-				description: value.type + "( "+ (value.statut=='postponed' ? "reporté": value.statut=="salle attente" ? "salle d'attente":value.statut=='planified' ? "Planifié" : value.statut=='canceled'? "Annulé":"Honoré") +" )",
-				title: value.name + " " + value.surname,
-				time:{
-					start : moment(value.date, "DD/MM/YYYY").format("YYYY-MM-DD") + " " + moment(value.heure, "HH:mm").format("HH:mm"),
-					end : moment(value.date,"DD/MM/YYYY").format("YYYY-MM-DD") + " " + moment(value.heure,"HH:mm").add(30,'minutes').format("HH:mm")
-				},
-				isEditable:true,
-				id :value.id,
-				colorScheme:value.color
+    let generated = [];
+    for (const [key, value] of Object.entries(mainList.value)) {
+        generated.push({
+            description:
+                value.type +
+                " (" +
+                (value.statut == "postponed"
+                    ? "reporté"
+                    : value.statut == "salle attente"
+                    ? "salle d'attente"
+                    : value.statut == "planified"
+                    ? "Planifié"
+                    : value.statut == "canceled"
+                    ? "Annulé"
+                    : "Honoré") +
+                " )",
+            title: value.name + " " + value.surname,
+            time: {
+                start:
+                    moment(value.date, "DD/MM/YYYY").format("YYYY-MM-DD") +
+                    " " +
+                    moment(value.heure, "HH:mm").format("HH:mm"),
+                end:
+                    moment(value.date, "DD/MM/YYYY").format("YYYY-MM-DD") +
+                    " " +
+                    moment(value.heure, "HH:mm")
+                        .add(30, "minutes")
+                        .format("HH:mm"),
+            },
+            isEditable: true,
+            id: value.id, // Event ID
+            uid: value.uid, // Include UID here
+            colorScheme: value.color,
+        });
+    }
 
-               
-			})
-		}
-        
-		eventss.value=generated
-		loaded.value=true
-	}
+    eventss.value = generated;
+    loaded.value = true;
+};
+
 
     async function saveRDV()
     {
-        console.log("Current mainList:", mainList.value);
+        
         const rdvId = rdv.value.id;
         
         const matchedRdv = mainList.value.find(item => item.id === rdvId);
@@ -103,8 +121,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 
 
     watch(date, async (newValue,oldValue) => {
-        console.log("old month",oldValue)
-        console.log("new month",newValue)
+      
         if(moment(oldValue).format("MM")==moment(newValue).format("MM"))
         {
             innerList.value = await client.getByDate((moment(newValue).format()).split("+")[0])
@@ -192,17 +209,58 @@ import { ElMessage, ElMessageBox } from 'element-plus';
         editRDV.value=true
     }
 
-    onBeforeMount(async ()=>{
-		await changeToEvents()
-    })
+onBeforeMount(async () => {
+    await changeToEvents()
+})
+    let clickTimer: ReturnType<typeof setTimeout> | null = null;
+    let clickCount = 0;
+
+    function handleEventClick(event: any) {
+    clickCount++;
+    console.log(event)
+    if (clickCount === 1) {
+        // Start a timer to detect double-click
+        clickTimer = setTimeout(() => {
+            clickCount = 0; // Reset click count after timeout
+            console.log("Single-click detected, ignoring...");
+        }, 300); // 300ms delay to detect double-click
+        } else if (clickCount === 2) {
+        // Double-click detected
+        if (clickTimer) clearTimeout(clickTimer); // Clear the single-click timer
+        clickCount = 0;
+
+        
+
+        if (event.clickedEvent.uid) {
+            // Navigate to the new URL
+            const uid = event.clickedEvent.uid;
+            router.push(`/dossiers/${uid}`);  
+
+            // Optionally, show a success message
+            ElMessage.info(`Redirection vers le dossier avec l'UID : ${uid}`);
+        } else {
+            console.error("UID est manquant dans l'objet de l'événement !");
+        }
+    }
+}
+
+
+
 
 </script>
 
 <template>
     <div>
-        <Qalendar :config="config" @edit-event="(id:number)=>{show(id)}" :events="eventss" @delete-event="(id:number)=>{confirmDelete(id)}"  @datetime-was-clicked="(datetime:any)=>{addRDV(datetime)}" v-if="loaded">
-            
-        </Qalendar>
+        <Qalendar
+            :config="config"
+            @edit-event="(id:number) => { show(id) }"
+            @delete-event="(id:number) => { confirmDelete(id) }"
+            @datetime-was-clicked="(datetime:any) => { addRDV(datetime) }"
+            @event-was-clicked="(id:number) => { handleEventClick(id) }" 
+            :events="eventss"
+            v-if="loaded"
+        />
+        
         <div class="text-center text-2xl" v-else>
             <span class="loading"></span> Chargement de l'agenda
         </div>
@@ -242,6 +300,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
         
     </div>
 </template>
+
 <style>
     @import "qalendar/dist/style.css";
 </style>

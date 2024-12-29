@@ -101,6 +101,11 @@
                             <el-icon  > <img src="https://clickdoc.webredirect.org/public/icons/rapport.png" > </el-icon> Rapports
                         </a>
                     </li>
+                    <li  @click="router.push('/Stock')">
+                        <a>
+                            <el-icon  > <img src="https://clickdoc.webredirect.org/public/icons/drugstore.png" > </el-icon> Ma pharmacie
+                        </a>
+                    </li>
                 </span>
             </ul>
         </div>

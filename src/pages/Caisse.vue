@@ -169,9 +169,11 @@ watch(filter, async () => {
                                 <el-tab-pane
                                     label="Entrées"
                                 >
+
                                     <button class="btn btn-sm btn-block background-clickdoc" @click.prevent="addPayment=true">
                                         Ajouter paiement
                                     </button>
+
                                     <ui-table   
                                         ref="table"
                                         :hasButton="false" 
@@ -188,6 +190,8 @@ watch(filter, async () => {
                                     <button class="btn btn-sm btn-block background-clickdoc" @click.prevent="addCharge=true">
                                         Ajouter charge
                                     </button>
+                                    
+
                                     <ui-table   
                                         ref="table1"
                                         :hasButton="false" 
@@ -197,7 +201,10 @@ watch(filter, async () => {
                                         :actions="[]"
                                     />
                                 </el-tab-pane>
+                                <el-tab-pane label="Exporter"/>
+
                             </el-tabs>
+                            
                         </div>
                     </el-col>
                     <el-col :span="8" >

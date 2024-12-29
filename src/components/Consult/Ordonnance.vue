@@ -63,10 +63,10 @@ async function setOrdonnance() {
   }
 
   // Ensure required fields in the modal are provided
-  if (!modalForm.value.unit || !modalForm.value.administrationMode || !modalForm.value.frequency) {
-    ElMessage.error("Veuillez remplir les champs obligatoires (Unité, Mode d'administration, Fréquence).");
-    return;
-  }
+  // if (!modalForm.value.unit || !modalForm.value.administrationMode || !modalForm.value.frequency) {
+  //   ElMessage.error("Veuillez remplir les champs obligatoires (Unité, Mode d'administration, Fréquence).");
+  //   return;
+  // }
 
   // Prepare data to send
   const ordonnanceData = {
@@ -98,7 +98,7 @@ async function setOrdonnance() {
       unit: "",
       administrationMode: "",
       frequency: "",
-      durationValue: 28,
+      durationValue: 0,
       durationUnit: "",
       comment: "",
       contraindications: [], // Reset as empty array
@@ -136,7 +136,7 @@ const modalForm = ref({
   unit: "",
   administrationMode: "",
   frequency: "",
-  durationValue: 28,
+  durationValue: 0,
   durationUnit: "",
   comment: "",
   contraindications:"",
@@ -220,6 +220,24 @@ function addContraindication(newContraindication: string) {
 
 function handleShowModal() {
     if (prescription.value.medicament_id) {
+     
+      modalForm.value = {
+            unit: "",
+            administrationMode: "",
+            frequency: "",
+            durationValue: 0,
+            durationUnit: "",
+            comment: "",
+            contraindications: "", // Reset to an empty array
+        };
+        
+        doseValues.value = {
+            Matin: 0,
+            Midi: 0,
+            Soir: 0,
+            "Au coucher": 0,
+        };
+
         showModal.value = true;
     } else {
         ElMessage.error('Veuillez sélectionner un médicament.');
@@ -327,10 +345,10 @@ function handleShowModal() {
                 </el-table-column>
                 <el-table-column label="Timing" width="300">
                     <template #default="scope">
-                    Matin: {{ scope.row.matin || 0 }}, 
-                    Midi: {{ scope.row.midi || 0 }}, 
-                    Soir: {{ scope.row.soir || 0 }}, 
-                    Au coucher: {{ scope.row.au_coucher || 0 }}
+                        Matin: {{ scope.row.matin || 0 }}, 
+                        Midi: {{ scope.row.midi || 0 }}, 
+                        Soir: {{ scope.row.soir || 0 }}, 
+                        Au coucher: {{ scope.row.au_coucher || 0 }}
                     </template>
                 </el-table-column>
                 <el-table-column width="75px" >

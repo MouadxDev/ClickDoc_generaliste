@@ -205,7 +205,7 @@ import ENV from '../../../core/env';
             <ui-sheet :title="'Dossier N° '+patient.uid" :hasBack="true" :hasAction="true" :action="action" :isTop="true" />
             <el-row :gutter="10">
                 <el-col :span="18">
-					<div class="flex"> 
+					<div class="flex" style="padding-top:10px ;gap: 10px;"> 
                         <a 
                             class="btn background-clickdoc" 
                             target="_blank" 
@@ -219,7 +219,14 @@ import ENV from '../../../core/env';
                             :href="`${ENV.VITE_BACKEND}/certificat/repos/${patient.uid}/${authStore.user.id}`"
                             >
                             certificat de repos
-                        </a>
+                           </a>
+                           <a 
+                            class="btn background-clickdoc" 
+                            target="_blank" 
+                            :href="`${ENV.VITE_BACKEND}/facturation/${patient.uid}/${authStore.user.id}`"
+                            >
+                            Facturation
+                           </a>
 						
 					</div>
                     <div class="rounded-2xl p-4 bg-white mt-3 shadow-xl" >

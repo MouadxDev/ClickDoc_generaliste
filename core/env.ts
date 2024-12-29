@@ -1,6 +1,6 @@
 const ENV = {
-    "VITE_BACKEND_API":"http://192.168.1.10:8001/api",
-    "VITE_BACKEND":"http://192.168.1.10:8001",
+    "VITE_BACKEND_API":"http://127.0.0.1:8011/api",
+    "VITE_BACKEND":"http://127.0.0.1:8011",
 
     "VITE_BACKEND_URL_AUTH":"/auth",
     "VITE_BACKEND_URL_INITIATE":"/initiate",
@@ -42,8 +42,11 @@ const ENV = {
     "VITE_BACKEND_URL_TABLEAU":"/tableau-perso",
     "VITE_BACKEND_URL_TASK":"/tasks",
 	"VITE_BACKEND_URL_REPORTING":"/reporting",
+    "VITE_BACKEND_URL_Stock":"/stock",
+    
     "VITE_BACKEND_URL_LOGIN":"/login",
     "VITE_BACKEND_URL_LOGOUT":"/logout",
+
 
     "AI_Voice2Text":"https://clickdoc.webredirect.org/flask-audio-api/"
 

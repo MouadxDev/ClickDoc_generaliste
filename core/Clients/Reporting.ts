@@ -11,7 +11,7 @@ export class Reporting {
 
     public async getAll() : Promise<IResponse> {
         try {
-            const response = await this.client.get("/demographics,dates,plage-horaire,rdv-annule")
+            const response = await this.client.get("/demographics,dates,plage-horaire,rdv-annule,billing,patients,consultations")
             return response.data
         }
         catch(error:any) {

@@ -119,6 +119,13 @@ const routes = [
     name: 'Rapports',
     component: () => import('../pages/Rapports.vue'),
     meta: { requiresAuth: true },
+  },
+  
+	{
+    path: '/Stock',
+    name: 'Stock',
+    component: () => import('../pages/Stock.vue'),
+    meta: { requiresAuth: true },
   }
 ]
 

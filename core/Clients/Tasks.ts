@@ -77,7 +77,7 @@ export class Tasks {
         try {     
 
             const response = await this.client.delete(`/${id}`);
-            ElMessage.success("Task deleted successfully");
+            ElMessage.success("Tâche supprimée avec succès");
             
             return response.data;
         } catch (error: any) {

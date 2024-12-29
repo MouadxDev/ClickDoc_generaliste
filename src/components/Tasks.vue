@@ -49,7 +49,7 @@
     const deleteTask = async (taskToDelete) => {
         try {
             // Optionally, confirm with the user
-            if (confirm('Are you sure you want to delete this task?')) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')) {
                 // Send delete request to the server
                 await taskClient.delete(taskToDelete.id);
 
