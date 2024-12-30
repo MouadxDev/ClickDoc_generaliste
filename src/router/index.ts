@@ -1,6 +1,6 @@
 import {
   createRouter,
-  createWebHistory,
+  createWebHashHistory,
 } from 'vue-router';
 
 import { useAuthStore } from '../../core/Data/stores/auth';
@@ -131,7 +131,7 @@ const routes = [
 
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes
 })
 
