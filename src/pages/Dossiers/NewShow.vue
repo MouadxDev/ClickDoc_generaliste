@@ -206,7 +206,7 @@ import ENV from '../../../core/env';
             <el-row :gutter="10">
                 <el-col :span="18">
 					<div class="flex" style="padding-top:10px ;gap: 10px;"> 
-                        <a 
+                             <a 
                             class="btn background-clickdoc" 
                             target="_blank" 
                             :href="`${ENV.VITE_BACKEND}/certificat/aptitude/${patient.uid}/${authStore.user.id}`"
@@ -219,6 +219,13 @@ import ENV from '../../../core/env';
                             :href="`${ENV.VITE_BACKEND}/certificat/repos/${patient.uid}/${authStore.user.id}`"
                             >
                             certificat de repos
+                           </a>
+                           <a 
+                            class="btn background-clickdoc" 
+                            target="_blank" 
+                            :href="`${ENV.VITE_BACKEND}/certificat/maladpro/${patient.uid}/${authStore.user.id}`"
+                            >
+                            certificat maladie pro
                            </a>
                            <a 
                             class="btn background-clickdoc" 

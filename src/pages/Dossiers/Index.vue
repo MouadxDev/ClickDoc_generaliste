@@ -5,6 +5,7 @@
     import { useUtilStore } from '../../../core/Data/stores/utilitaire';
     import { useAuthStore } from '../../../core/Data/stores/auth';
     import { usePatientStore } from '../../../core/Data/stores/patient';
+import ENV from '../../../core/env';
 
 
     const patientClient = new Patients();
@@ -34,6 +35,11 @@
         }
     ]
 
+    function handleExport() {
+        const url = `${ENV.VITE_BACKEND}/patients`;
+        window.open(url, '_blank'); 
+    }
+
 
 
 </script>
@@ -45,7 +51,9 @@
                 :hasAvatar="true"  
                 :hasButton="true" 
                 :client="patientClient" 
-                :add="true"  
+                :add="true"
+                :export="true"  
+                :onExport="handleExport"
                 :onAdd="()=>{util.setPatient(true)}"
                 :triggerStore="usePatientStore"
                 title="Patients" 

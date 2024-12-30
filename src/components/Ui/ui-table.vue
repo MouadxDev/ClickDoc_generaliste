@@ -16,10 +16,12 @@ const props = defineProps<{
   fields: Array<any>;
   client: any;
   add?: boolean;
+  export?:boolean; 
   print?: boolean;
   patient_id?: number;
   onAdd: Function | any;
   onFilter: Function | any;
+  onExport: Function | any;
   search?: boolean;
   hasAvatar?: boolean;
   hasLogo?: boolean;
@@ -120,6 +122,21 @@ defineExpose({
             </el-icon>
             &nbsp;&nbsp; <span class="font-bold">{{ o.text }}</span>
           </el-button>
+
+          <el-button
+            size="small"
+            link
+            v-if="props.export == true"
+            @click="() => { props.onExport() }"
+            class="btn-doc"
+            aria-label="Submit"
+          >
+            <el-icon>
+              <UploadOutlined />
+            </el-icon>
+            &nbsp;&nbsp; Exporter
+          </el-button>
+
           <el-button
             size="small"
             link
@@ -133,6 +150,9 @@ defineExpose({
             </el-icon>
             &nbsp;&nbsp; Ajouter
           </el-button>
+
+      
+          
           <el-button
             size="small"
             link

@@ -50,6 +50,7 @@ import router from '../../router/index.ts';
         const changeToEvents = async () => {
     loaded.value = false;
     mainList.value = await client.getByMonth(moment(date.value).format("MM"));
+    
 
     let generated = [];
     for (const [key, value] of Object.entries(mainList.value)) {
