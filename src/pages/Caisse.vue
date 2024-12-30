@@ -5,6 +5,11 @@ import { Patients } from '../../core/Clients/Patients';
 import {Charge} from "../../core/Clients/Charge"
 import {Payment} from "../../core/Clients/Payment"
 import {Facture} from "../../core/Clients/Facture"
+import ENV from '../../core/env';
+
+import { useAuthStore } from '../../core/Data/stores/auth';
+
+const authStore = useAuthStore()
 
 const patientClient = new Patients();
 const client = new Charge();
@@ -118,12 +123,17 @@ onMounted(async ()=>{
 watch(filter, async () => {
   await searchThings()
 })
+function handleExport() {
+        const url = `${ENV.VITE_BACKEND}/DataTableCaisse/${authStore.user.id}`;
+        window.open(url, '_blank'); 
+    }
 </script>
 
 <template>
     <main-layout>
         <div class="container mx-auto">
-        <ui-sheet title="Caisse" :hasBack="true" :hasAction="true" :action="()=>{}" :isTop="true" />
+        <ui-sheet title="Caisse" :hasBack="true" :hasAction="true" :action="()=>{}" :isTop="true" :export="true" :onExport="handleExport"/>
+
             <div class="stats mt-2 shadow w-full">
                 <div class="stat">
                     <div class="stat-figure text-clickdoc">
